@@ -12,7 +12,7 @@ Routes
 -------
 
 Jag har valt att strukturera min routes enligt följande:
-/documents - här visar jag alla och sparar nya dokument
-/documents/init - initierar färdiga dokument
-/documents/update - här uppdaterar jag befintliga dokument
-/documents/delete - Här raderar jag befintliga dokument
+- /documents - här visar jag alla och sparar nya dokument
+- /documents/init - initierar färdiga dokument
+- /documents/update - här uppdaterar jag befintliga dokument
+- /documents/delete - Här raderar jag befintliga dokument
