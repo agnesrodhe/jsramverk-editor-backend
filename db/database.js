@@ -3,7 +3,7 @@ const collectionName = "docs";
 
 const database = {
     getDb: async function getDb () {
-        let dsn = `mongodb://localhost:27017/docs`;
+        let dsn = `mongodb+srv://texteditor:agro21@cluster0.wxupg3n.mongodb.net/?retryWrites=true&w=majority`;
 
         const client = await mongo.connect(dsn, {
             useNewUrlParser: true,

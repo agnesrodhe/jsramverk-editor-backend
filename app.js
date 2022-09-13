@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require('cors');
 const morgan = require('morgan');
@@ -5,7 +6,6 @@ const bodyParser = require("body-parser");
 const documents = require('./routes/documents');
 const app = express();
 const port = process.env.PORT || 1337;
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -47,37 +47,5 @@ app.get("/", (req, res) => {
 
     res.json(data);
 });
-
-// app.get("/user", (req, res) => {
-//     res.json({
-//         data: {
-//             msg: "Got a GET request, sending back default 200"
-//         }
-//     });
-// });
-
-// app.get("/hello/:msg", (req, res) => {
-//     const data = {
-//         data: {
-//             msg: req.params.msg
-//         }
-//     };
-//     res.json(data);
-// });
-// app.post("/user", (req, res) => {
-//     res.status(201).json({
-//         data: {
-//             msg: "Got a POST request, sending back 201 created"
-//         }
-//     });
-// });
-
-// app.put("/user", (req, res) => {
-//     res.status(204).send();
-// });
-
-// app.delete("/user", (req, res) => {
-//     res.status(204).send();
-// });
 
 app.listen(port, () => console.log(`Example API listening on port ${port}!`));

@@ -46,19 +46,33 @@ const documents = {
         }
     },
 
-    updateDocument: async function updateDocument() {
+    updateDocument: async function updateDocument(documentToUpdate) {
         let db;
 
         try {
             db = await database.getDb();
-
-            const filter = { _id: ObjectId(body["_id"]) };
-            const updateADocument = {
-                name: body.name,
-                text: body.text,
-            };
-    
+            const filter = { _id: ObjectId(documentToUpdate._id) };
+            const updateADocument = {$set: {name:documentToUpdate.name, text:documentToUpdate.text}};
             const result = await db.collection.updateOne(filter, updateADocument);
+
+            console.log(result);
+
+        } catch (error) {
+            console.error(error.message);
+        } finally {
+            await db.client.close();
+        }
+    },
+
+    deleteDocument: async function deleteDocument(documentToDelete) {
+        let db;
+
+        try {
+            db = await database.getDb();
+            const filter = { _id: ObjectId(documentToDelete._id) };
+            const result = await db.collection.deleteOne(filter);
+
+            console.log(result);
 
         } catch (error) {
             console.error(error.message);
