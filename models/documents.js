@@ -3,7 +3,7 @@ const initDocs = require("../data/documents.json");
 const ObjectId = require('mongodb').ObjectId;
 
 const documents = {
-    getAllDocuments: async function getAllDocuments(res, req) {
+    getAllDocuments: async function getAllDocuments(res) {
         let db;
 
         try {

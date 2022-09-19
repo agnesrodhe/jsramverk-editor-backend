@@ -1,8 +1,7 @@
+/* global it describe before resolve*/
 process.env.NODE_ENV = 'test';
-
 const database = require("../db/database.js");
 const collectionName = "docs";
-const Document = require("../models/documents");
 
 const chai = require('chai');
 const chaiHttp = require('chai-http');
@@ -15,27 +14,25 @@ chai.use(chaiHttp);
 let _id = "";
 
 describe('documents', () => {
-    before(() => {
-        return new Promise(async (resolve) => {
-            const db = await database.getDb();
+    before(async () => {
+        const db = await database.getDb();
 
-            db.db.listCollections(
-                { name: collectionName }
-            )
-                .next()
-                .then(async function(info) {
-                    if (info) {
-                        await db.collection.drop();
-                    }
-                })
-                .catch(function(err) {
-                    console.error(err);
-                })
-                .finally(async function() {
-                    await db.client.close();
-                    resolve();
-                });
-        });
+        db.db.listCollections(
+            { name: collectionName }
+        )
+            .next()
+            .then(async function(info) {
+                if (info) {
+                    await db.collection.drop();
+                }
+            })
+            .catch(function(err) {
+                console.error(err);
+            })
+            .finally(async function() {
+                await db.client.close();
+                resolve();
+            });
     });
 
     describe('GET /documents', () => {
