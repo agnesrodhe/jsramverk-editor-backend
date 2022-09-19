@@ -17,25 +17,26 @@ if (process.env.NODE_ENV !== 'test') {
 
 app.use((req, res, next) => {
     var err = new Error("Not Found");
+
     err.status = 404;
     next(err);
 });
 
-app.use((err, req, res, next) => {
-    if (res.headersSent) {
-        return next(err);
-    }
+// app.use((err, req, res, next) => {
+//     if (res.headersSent) {
+//         return next(err);
+//     }
 
-    res.status(err.status || 500).json({
-        "errors": [
-            {
-                "status": err.status,
-                "title": err.message,
-                "detail": err.message
-            }
-        ]
-    });
-});
+//     res.status(err.status || 500).json({
+//         "errors": [
+//             {
+//                 "status": err.status,
+//                 "title": err.message,
+//                 "detail": err.message
+//             }
+//         ]
+//     });
+// });
 
 
 app.get("/", (req, res) => {
@@ -48,4 +49,6 @@ app.get("/", (req, res) => {
     res.json(data);
 });
 
-app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+const server = app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+
+module.exports = server;
