@@ -4,8 +4,12 @@ const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
 const documents = require('./routes/documents');
+const { SocketAddress } = require("net");
+
 const app = express();
-const port = process.env.PORT || 1337;
+const httpServer = require("http").createServer(app);
+
+const port = process.env.PORT || 8976;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -14,30 +18,6 @@ app.use('/documents', documents);
 if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined'));
 }
-
-app.use((req, res, next) => {
-    var err = new Error("Not Found");
-
-    err.status = 404;
-    next(err);
-});
-
-// app.use((err, req, res, next) => {
-//     if (res.headersSent) {
-//         return next(err);
-//     }
-
-//     res.status(err.status || 500).json({
-//         "errors": [
-//             {
-//                 "status": err.status,
-//                 "title": err.message,
-//                 "detail": err.message
-//             }
-//         ]
-//     });
-// });
-
 
 app.get("/", (req, res) => {
     const data = {
@@ -49,6 +29,25 @@ app.get("/", (req, res) => {
     res.json(data);
 });
 
-const server = app.listen(port, () => console.log(`Example API listening on port ${port}!`));
+const io = require("socket.io")(httpServer, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    }
+});
+
+io.sockets.on('connection', function(socket) {
+    socket.on('create', function(room) {
+        socket.join(room);
+
+    });
+    socket.on("doc", function(data) {
+        socket.to(data["_id"]).emit("doc", data);
+        socket.broadcast.emit("doc", data);
+    })
+});
+
+
+const server = httpServer.listen(port, () => console.log(`Example API listening on port ${port}!`));
 
 module.exports = server;
