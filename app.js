@@ -30,7 +30,7 @@ app.get("/", (req, res) => {
 
 const io = require("socket.io")(httpServer, {
     cors: {
-        origin: "*",
+        origin: '*',
         methods: ["GET", "POST"]
     }
 });
