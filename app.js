@@ -1,9 +1,10 @@
-
+require('dotenv').config()
 const express = require("express");
 const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require("body-parser");
 const documents = require('./routes/documents');
+const auth = require('./routes/auth.js');
 
 const app = express();
 const httpServer = require("http").createServer(app);
@@ -14,6 +15,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/documents', documents);
+app.use('/auth', auth);
 if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined'));
 }

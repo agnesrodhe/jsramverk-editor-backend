@@ -1,8 +1,7 @@
 const mongo  = require("mongodb").MongoClient;
-const collectionName = "docs";
 
 const database = {
-    getDb: async function getDb() {
+    getDb: async function getDb(collectionName = "docs") {
         let dsn = `mongodb+srv://texteditor:agro21@cluster0.wxupg3n.mongodb.net/`
         + `?retryWrites=true&w=majority`;
 

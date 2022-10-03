@@ -2,10 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 const documentsModel = require("../models/documents");
+const usersModel = require("../models/users");
 
-router.get('/', async (req, res) => {
+router.get(
+    '/',
+    (req, res, next) => usersModel.checkToken(req, res, next),
+    async (req, res) => {
     const documents = await documentsModel.getAllDocuments();
-
     return res.json({
         data: documents
     });
