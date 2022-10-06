@@ -6,7 +6,7 @@ const usersModel = require("../models/users");
 
 router.get(
     '/',
-    (req, res, next) => usersModel.checkToken(req, res, next),
+    // (req, res, next) => usersModel.checkToken(req, res, next),
     async (req, res) => {
     const documents = await documentsModel.getAllDocuments();
     return res.json({

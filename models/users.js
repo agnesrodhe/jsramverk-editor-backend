@@ -6,6 +6,26 @@ const jwt = require('jsonwebtoken');
 const saltRounds = 10;
 
 const users = {
+    getAllUsers: async function getAllUsers(res) {
+        let db;
+        try {
+            db = await database.getDb("users");
+            const allUsers = await db.collection.find().toArray();
+            if (allUsers) {
+                return allUsers;
+            }
+        } catch (e) {
+            return res.status(500).json({
+                error: {
+                    status: 500,
+                    message: e.message,
+                }
+            });
+        } finally {
+            await db.client.close();
+        }
+    },
+
     register: async function register(res, body) {
         const email = body.email;
         const password = body.password;
@@ -114,7 +134,6 @@ const users = {
                     }
                 });
             }
-            console.log(user);
 
             if (result) {
                 const payload = { email: user.email };
@@ -144,7 +163,6 @@ const users = {
     checkToken: function checkToken(req, res, next) {
         const token = req.headers['x-access-token'];
         jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {
-            console.log(res);
             if (err) {
                 return res.status(401).json({
                     errors: {
@@ -157,7 +175,24 @@ const users = {
             // Valid token send on the request
             next();
         });
-    }
+    },
+
+    deleteUser: async function deleteUser(userToDelete) {
+        let db;
+
+        try {
+            db = await database.getDb("users");
+            const filter = { _id: ObjectId(userToDelete._id) };
+
+            const result = await db.collection.deleteOne(filter);
+
+            console.log(result);
+        } catch (error) {
+            console.error(error.message);
+        } finally {
+            await db.client.close();
+        }
+    },
 }
 
 module.exports = users;

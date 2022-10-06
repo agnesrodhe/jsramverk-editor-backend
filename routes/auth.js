@@ -17,6 +17,22 @@ router.post('/login', async (req, res) => {
 
 });
 
+router.delete('/delete', async (req, res) => {
+    console.log(req);
+        await usersModel.deleteUser(req.body);
+        res.status(204).send();
+});
+
+
+router.get(
+    '/users',
+    async (req, res) => {
+    const users = await usersModel.getAllUsers();
+    return res.json({
+        data: users
+    });
+});
+
 // router.post(
 //     "/",
 //     async (req, res) => {

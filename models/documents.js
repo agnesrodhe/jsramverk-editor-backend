@@ -55,7 +55,9 @@ const documents = {
             const updateADocument = {
                 $set: {
                     name: documentToUpdate.name,
-                    text: documentToUpdate.text
+                    text: documentToUpdate.text,
+                    owner: documentToUpdate.owner,
+                    allowed_users: documentToUpdate.allowed_users
                 }
             };
 
