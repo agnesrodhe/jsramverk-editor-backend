@@ -9,6 +9,17 @@ const auth = require('./routes/auth.js');
 const app = express();
 const httpServer = require("http").createServer(app);
 
+const visual = true;
+const { graphqlHTTP } = require('express-graphql');
+const {
+    GraphQLSchema
+} = require("graphql");
+
+const RootQueryType = require("./graphql/root.js");
+const schema = new GraphQLSchema({
+    query: RootQueryType
+});
+
 const port = process.env.PORT || 8976;
 
 app.use(bodyParser.json());
@@ -16,6 +27,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 app.use('/documents', documents);
 app.use('/auth', auth);
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    graphiql: visual,
+}));
 if (process.env.NODE_ENV !== 'test') {
     app.use(morgan('combined'));
 }
