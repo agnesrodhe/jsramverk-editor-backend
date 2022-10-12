@@ -57,8 +57,8 @@ io.sockets.on('connection', function(socket) {
         socket.join(room);
     });
     socket.on("doc", function(data) {
-        socket.to(data["_id"]).emit("doc", data);
-        socket.broadcast.emit("doc", data);
+        socket.to(data._id).emit("document", data);
+        // socket.broadcast.emit("doc", data);
     });
 });
 
