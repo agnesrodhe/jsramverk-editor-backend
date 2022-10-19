@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const saltRounds = 10;
 const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey('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');
+sgMail.setApiKey(process.env.SG_KEY);
 
 const users = {
     sendEmail: async function sendEmail(res, body) {
