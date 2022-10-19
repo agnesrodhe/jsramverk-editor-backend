@@ -4,8 +4,21 @@ const validator = require('email-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const saltRounds = 10;
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey('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');
 
 const users = {
+    sendEmail: async function sendEmail(res, body) {
+        sgMail
+            .send(body)
+            .then(() => {
+                console.log("Email skickat");
+            })
+            .catch((error) => {
+                console.error("Error: ", error)
+            });
+    },
+
     getAllUsers: async function getAllUsers(res) {
         let db;
         try {

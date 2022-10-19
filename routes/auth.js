@@ -23,6 +23,13 @@ router.delete('/delete', async (req, res) => {
         res.status(204).send();
 });
 
+router.post('/send-email', async (req, res) => {
+    const body = req.body;
+
+    await usersModel.sendEmail(res, body);
+
+});
+
 
 router.get(
     '/users',
