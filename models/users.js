@@ -1,3 +1,4 @@
+require('dotenv').config()
 const database = require("../db/database");
 const ObjectId = require('mongodb').ObjectId;
 const validator = require('email-validator');
