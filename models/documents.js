@@ -56,6 +56,7 @@ const documents = {
                 $set: {
                     name: documentToUpdate.name,
                     text: documentToUpdate.text,
+                    textType: documentToUpdate.textType,
                     owner: documentToUpdate.owner,
                     allowed_users: documentToUpdate.allowed_users
                 }

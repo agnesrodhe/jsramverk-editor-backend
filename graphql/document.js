@@ -14,6 +14,7 @@ const DocumentType = new GraphQLObjectType({
         _id: { type: GraphQLString },
         name: { type: new GraphQLNonNull(GraphQLString) },
         text: { type: GraphQLString },
+        textType: { type: GraphQLString },
         owner: { type: GraphQLString },
         allowed_users: { type: new GraphQLList(GraphQLString) },
     })
